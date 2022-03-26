@@ -35,6 +35,7 @@ from .api_pb2 import (  # type: ignore
     ListEntitiesLockResponse,
     ListEntitiesMediaPlayerResponse,
     ListEntitiesNumberResponse,
+    ListEntitiesRemoteResponse,
     ListEntitiesRequest,
     ListEntitiesSelectResponse,
     ListEntitiesSensorResponse,
@@ -50,6 +51,7 @@ from .api_pb2 import (  # type: ignore
     NumberStateResponse,
     PingRequest,
     PingResponse,
+    RemoteCommandRequest,
     SelectCommandRequest,
     SelectStateResponse,
     SensorStateResponse,
@@ -189,4 +191,6 @@ MESSAGE_TYPE_TO_PROTO = {
     63: ListEntitiesMediaPlayerResponse,
     64: MediaPlayerStateResponse,
     65: MediaPlayerCommandRequest,
+    66: ListEntitiesRemoteResponse,
+    67: RemoteCommandRequest,
 }

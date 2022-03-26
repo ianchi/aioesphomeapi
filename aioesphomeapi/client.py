@@ -44,6 +44,7 @@ from .api_pb2 import (  # type: ignore
     ListEntitiesLockResponse,
     ListEntitiesMediaPlayerResponse,
     ListEntitiesNumberResponse,
+    ListEntitiesRemoteResponse,
     ListEntitiesRequest,
     ListEntitiesSelectResponse,
     ListEntitiesSensorResponse,
@@ -57,6 +58,8 @@ from .api_pb2 import (  # type: ignore
     MediaPlayerStateResponse,
     NumberCommandRequest,
     NumberStateResponse,
+    RemoteCommand,
+    RemoteCommandRequest,
     SelectCommandRequest,
     SelectStateResponse,
     SensorStateResponse,
@@ -110,6 +113,7 @@ from .model import (
     MediaPlayerInfo,
     NumberInfo,
     NumberState,
+    RemoteInfo,
     SelectInfo,
     SelectState,
     SensorInfo,
@@ -272,6 +276,7 @@ class APIClient:
             ListEntitiesClimateResponse: ClimateInfo,
             ListEntitiesLockResponse: LockInfo,
             ListEntitiesMediaPlayerResponse: MediaPlayerInfo,
+            ListEntitiesRemoteResponse: RemoteInfo,
         }
 
         def do_append(msg: message.Message) -> bool:
@@ -684,6 +689,29 @@ class APIClient:
         if media_url is not None:
             req.media_url = media_url
             req.has_media_url = True
+        assert self._connection is not None
+        await self._connection.send_message(req)
+
+    async def remote_command(
+        self,
+        key: int,
+        command: RemoteCommand,
+        protocol: str,
+        args: List[int],
+        repeat_: Optional[int] = 1,
+        wait_time: Optional[int] = 0,
+    ) -> None:
+        self._check_authenticated()
+
+        req = RemoteCommandRequest()
+        req.key = key
+        req.command = command
+
+        req.protocol = protocol
+        req.args = args
+        req.repeat = repeat_
+        req.wait_time = wait_time
+
         assert self._connection is not None
         await self._connection.send_message(req)
 

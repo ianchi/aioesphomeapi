@@ -666,6 +666,21 @@ class MediaPlayerEntityState(EntityState):
     muted: bool = False
 
 
+# ==================== REMOTE ====================
+@dataclass(frozen=True)
+class RemoteInfo(EntityInfo):
+    supports_transmit: List[str] = converter_field(default_factory=list, converter=list)
+    supports_receive: List[str] = converter_field(default_factory=list, converter=list)
+
+
+class RemoteCommand(APIIntEnum):
+    TURNON = 0
+    TURNOFF = 1
+    TOGGLE = 2
+    SEND = 3
+    LEARN = 4
+
+
 # ==================== INFO MAP ====================
 
 COMPONENT_TYPE_TO_INFO: Dict[str, Type[EntityInfo]] = {
@@ -684,6 +699,7 @@ COMPONENT_TYPE_TO_INFO: Dict[str, Type[EntityInfo]] = {
     "button": ButtonInfo,
     "lock": LockInfo,
     "media_player": MediaPlayerInfo,
+    "remote": RemoteInfo,
 }
 
 
