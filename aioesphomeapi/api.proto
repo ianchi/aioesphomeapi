@@ -1167,7 +1167,7 @@ message RemoteCommandRequest {
 
   // send_command
   string protocol = 3;
-  repeated fixed32 args = 4;
+  repeated sint64 args = 4 [packed=false];
   fixed32 repeat = 5;
   fixed32 wait_time = 6;
 }

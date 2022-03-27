@@ -708,7 +708,7 @@ class APIClient:
         req.command = command
 
         req.protocol = protocol
-        req.args = args
+        req.args.extend(args)  # pylint: disable=no-member
         req.repeat = repeat_
         req.wait_time = wait_time
 
